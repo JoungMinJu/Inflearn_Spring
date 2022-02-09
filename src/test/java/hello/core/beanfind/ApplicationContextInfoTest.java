@@ -28,7 +28,7 @@ public class ApplicationContextInfoTest {
             BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);
             if(beanDefinition.getRole() == BeanDefinition.ROLE_APPLICATION){
                 // 내가 만들어서 등록한 빈이면
-                Object bean = ac.get.bean(beanDefinition)
+                Object bean = ac.getBean(beanDefinitionName);
                 System.out.println("name= " +beanDefinitionName + " object = " + bean);
             }
         }
