@@ -8,10 +8,24 @@ import hello.core.member.MemberService;
 import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService{
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
 
 
+    private final MemberRepository memberRepository ;
+    private final DiscountPolicy discountPolicy;
+//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    // 할인 정책 변경하려면
+    // private final DiscountPolicy discountPolicy = new RateDiscountpolilcy();로 변경해주어야 한다.
+    // 즉 우리는 클라이언트인 orderServiceImpl의 코드를 고쳐야한다.
+    // 구체(구현) 클래스에도 의존하고 있는 상황!
+
+    // 인터페이스에만 의존하도록 설계와 코드를 변경
+    // 이대로만 하면 Null Pointer Exception이 발생하므로 누군가 OrderServiceImpl에
+    // DiscountPolicy의 구현 객체를 대신 생성하고 주입해야한다.
+    // --> 이에 따른 AppConfig 등장 (구현 객체를 생성하고 연결하는 책임을 가지는 별도의 설정 클래스)
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
     @Override
     public Order createOrder(Long memberid, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberid);
