@@ -25,7 +25,7 @@ public class AppConfig {
     // 각 메소드에 Bean이라고 등록하면, 스프링 컨테이너에 등록이 된다.
     @Bean
     public MemberService memberService(){
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(memberRepository());
 //        return new MemberServiceImpl();
     }
     @Bean
@@ -35,10 +35,10 @@ public class AppConfig {
     @Bean
     public OrderService orderService(){
         return new OrderServiceImpl(
-                new MemoryMemberRepository(), new FixDiscountPolicy());
+                memberRepository(), discountPolicy());
     }
     @Bean
     public DiscountPolicy discountPolicy(){
-        return new RateDiscountPolicy();
+        return new FixDiscountPolicy();
     }
 }

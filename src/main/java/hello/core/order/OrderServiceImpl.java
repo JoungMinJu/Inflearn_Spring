@@ -6,7 +6,10 @@ import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemberService;
 import hello.core.member.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderServiceImpl implements OrderService{
 
 
@@ -22,6 +25,7 @@ public class OrderServiceImpl implements OrderService{
     // 이대로만 하면 Null Pointer Exception이 발생하므로 누군가 OrderServiceImpl에
     // DiscountPolicy의 구현 객체를 대신 생성하고 주입해야한다.
     // --> 이에 따른 AppConfig 등장 (구현 객체를 생성하고 연결하는 책임을 가지는 별도의 설정 클래스)
+    @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
@@ -38,5 +42,10 @@ public class OrderServiceImpl implements OrderService{
         // Order만들어서 반환해주면 된다.
         // 그러면 OrderService의 역할은 끝.
         return new Order(memberid, itemName, itemPrice, discountPrice);
+    }
+
+    // 테스트 용도
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
     }
 }
