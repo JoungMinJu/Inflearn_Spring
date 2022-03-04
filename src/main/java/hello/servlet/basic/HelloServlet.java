@@ -14,8 +14,17 @@ public class HelloServlet extends HttpServlet {
     // 서블릿이 호출되면 service 메소드가 호출된다.
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("HelloServlet.service");
         System.out.println("request = " + request);
         System.out.println("response = " + response);
+        String username = request.getParameter("username"); // 쿼리파라미터 조회 가능.
+        System.out.println("username = " + username);
+        
+        // 헤더에 들어가는 내용
+        response.setContentType("text/plain"); // 단순 문자 응답 보낼 것.
+        response.setCharacterEncoding("utf-8");
+        // 바디에 들어가는 내용
+        response.getWriter().write("hello " +username);//http 메세지 바디에 들어가는 내용
 
     }
 }
