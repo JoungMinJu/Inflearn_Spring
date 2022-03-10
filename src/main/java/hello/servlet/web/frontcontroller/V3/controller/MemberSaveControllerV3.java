@@ -18,6 +18,7 @@ public class MemberSaveControllerV3 implements ControllerV3 {
         memberRepository.save(member);
 
         // 모델 뷰 만ㄷ르기
+        // 모델을 만들었으니까  getModel()해서 put 해주는 것.
         ModelView modelView = new ModelView("save-result");
         modelView.getModel().put("member", member);
         return modelView;

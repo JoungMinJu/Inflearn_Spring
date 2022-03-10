@@ -21,6 +21,7 @@ public class MyView {
     }
 
     public void render(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        // 모델에 있는 값을 JSP로 넘겨주기 위해서.
         modelToRequestAttribute(model, request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
         dispatcher.forward(request, response);
