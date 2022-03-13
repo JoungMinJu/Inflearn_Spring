@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping("/springmvc/v3/members")
+@RequestMapping(name="/springmvc/v3/members")
 public class SpringMemberControllerV3 {
     private MemberRepository memberRepository = MemberRepository.getInstance();
 
 
     // GET으로로만 받겠다.
     // 단순 조회
-    @RequestMapping("/new-form", method = RequestMethod.GET)
+    @RequestMapping(name="/new-form", method = RequestMethod.GET)
     // 더 쉽게 하려면
     // @GetMapping("/new-form")
     public String newForm(){
@@ -31,7 +31,7 @@ public class SpringMemberControllerV3 {
 
     // 단순 조회
     // @GetMapping
-    @RequestMapping("", method = RequestMethod.GET)
+    @RequestMapping(name="", method = RequestMethod.GET)
     public String members(Model model){
         List<Member> members = memberRepository.findAll();
 
@@ -40,7 +40,7 @@ public class SpringMemberControllerV3 {
     }
 
     // 데이터 내용 변경
-    @RequestMapping("/save", method = RequestMethod.POST)
+    @RequestMapping(name="/save", method = RequestMethod.POST)
     // @PostMapping("/save")
     // 애노테이션으로
     // http 기반 request, reseponse 받을 수 있고
