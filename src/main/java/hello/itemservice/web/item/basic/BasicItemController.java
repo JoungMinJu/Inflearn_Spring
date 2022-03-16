@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -54,7 +55,7 @@ public class BasicItemController {
 
     // 저장
     // 같은 url이지만 POST로 왔을 떄!
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV1(@RequestParam String itemName,
                             @RequestParam int price,
                             @RequestParam Integer quantity,
@@ -111,6 +112,32 @@ public class BasicItemController {
         itemRepository.save(item);
         return "basic/item";
     }
+
+
+    // PRG 패턴 적용
+//        @PostMapping("/add")
+    public String addItemV5(Item item){
+        itemRepository.save(item);
+        // 상품 상세 화면으로 이동해버림!! URL을 걍 바꿔버림
+        // 고객이 해당 url을 쳐서 이동한 것 마냥!
+            // r근데 이러면 URL 인코딩이 안되기 때문에 위험하다.
+            // url 암호화 못한다는 것.
+        return "redirect:/basic/items/"+item.getId();
+    }
+
+    // 고객은 저장이 잘 된건지. 확인이 좀 애매하자나
+    @PostMapping("/add")
+    // 저장 잘됐어요! 메세지 보여주기
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes){
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        // 뷰 템플릿에서 이 값이 있으며 ㄴ저장되었습니다라는 멧지ㅣ가 출력되어야한다.
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/basic/items/{itemId}";
+    }
+    // 실행 결과는
+    // http://localhost:8080/basic/items/3?status=true 이런식으로 된다.
+    // pathVariable(itemId) 바인딩하고, 나머지(status)는 쿼리파라미터로 처리하기 때문에!!
 
     // 상품 수정 폼 컨트롤러
     @GetMapping("/{itemId}/edit")
