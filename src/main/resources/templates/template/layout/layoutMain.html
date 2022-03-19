@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/layout/base :: common_header(~{::title},~{::link})">
+    <!--공통 레이아웃에서 아래의 부분은 좀 바꾸고 싶어요-->
+    <title>메인 타이틀</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/themes/smoothness/jquery-ui.css}">
+</head>
+<body>
+메인 컨텐츠
+</body>
+</html>
